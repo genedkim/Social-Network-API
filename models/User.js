@@ -13,19 +13,24 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      match: /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
+      match: /^([\w_\.-]+)@([\w\.-]+)\.[a-z\.]{2,6})$/,
     },
-    thought: [thoughtSchema],
-    friends: []
+    thought: [{ type: Schema.Types.ObjectId, ref: 'Thought' }],
+    friends: [{ type: Schema.Types.ObjectId, ref: 'User' }]
   },
   {
     toJSON: {
       virtuals: true,
+      getters: true,
     },
     id: false,
   }
 );
 
-const User = model('user', userSchema);
+userSchema.virtual('friendCount').get(function () {
+  return this.friends.length;
+});
 
-module.exports = Student;
+const User = model('User', userSchema);
+
+module.exports = User;
