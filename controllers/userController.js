@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongoose').Types;
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 module.exports = {
   getUsers(req, res) {
@@ -7,7 +7,7 @@ module.exports = {
       .select("-__v") // Exclude the "__v" field from the user object
       .populate({ path: "thoughts", select: "-__v" }) // Populate the "thoughts" field of the user object and exclude the "__v" field from the thought objects
       .populate({ path: "friends", select: "-__v" }) // Populate the "friends" field of the user object and exclude the "__v" field from the friend objects
-      .then(async (users) => {
+      .then((users) => {
         return res.json(users);
       })
       .catch((err) => {
