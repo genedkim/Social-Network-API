@@ -13,7 +13,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      match: /^([\w_\.-]+)@([\w\.-]+)\.[a-z\.]{2,6})$/,
+      match: /^([\w_\.-]+)@([\w\.-]+)\.([a-z\.]{2,6})$/,
     },
     thought: [{ type: Schema.Types.ObjectId, ref: 'Thought' }],
     friends: [{ type: Schema.Types.ObjectId, ref: 'User' }]
