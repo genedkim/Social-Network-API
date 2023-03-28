@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongoose').Types;
-const { User, Thought } = require('../models');
+const { User } = require('../models');
 
 module.exports = {
   getUsers(req, res) {
@@ -7,13 +7,8 @@ module.exports = {
       .select("-__v") // Exclude the "__v" field from the user object
       .populate({ path: "thoughts", select: "-__v" }) // Populate the "thoughts" field of the user object and exclude the "__v" field from the thought objects
       .populate({ path: "friends", select: "-__v" }) // Populate the "friends" field of the user object and exclude the "__v" field from the friend objects
-      .then((users) => {
-        return res.json(users);
-      })
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json(err);
-      });
+      .then((users) => res.json(users))
+      .catch((err) => res.status(500).json(err));
   },
 
   createUser(req, res) {
@@ -32,10 +27,7 @@ module.exports = {
           ? res.status(404).json({ message: 'No user found with that ID' })
           : res.json(user)
       })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-      });
+      .catch(err => res.status(500).json(err));
   },
 
   updateUser(req, res) {
@@ -53,23 +45,18 @@ module.exports = {
   },
 
   deleteUser(req, res) {
-    User.findOneAndDelete({ _id: req.params.studentId })
+    User.findOneAndDelete({ _id: req.params.userId })
       .then((user) => {
         !user
           ? res.status(404).json({ message: 'No user found with that ID' })
           : Thought.deleteMany({ username: user.username })
             .then((thought) => {
               !thought
-                ? res.status(404).json({
-                  message: 'User deleted, but no thoughts found',
-                })
-                : res.json({ message: 'User and associated thoughts successfully deleted' })
+                ? res.status(404).json({ message: 'User deleted, but no thoughts found' })
+                : res.json({ message: 'User and associated thoughts deleted successfully' })
             })
       })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-      });
+      .catch((err) => res.status(500).json(err));
   },
 
   addFriend(req, res) {
