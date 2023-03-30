@@ -7,16 +7,20 @@ const {User, Thought} = require('../models');
   await User.deleteMany({});
 
   await User.create({
-    username: 'TestUser1',
-    email: 'test1@email.com',
+    username: 'bonzo',
+    email: 'johnbonham@seedemail.com',
   });
   await User.create({
-    username: 'TestUser2',
-    email: 'test2@email.com',
+    username: 'plantman',
+    email: 'robertplant@seedemail.com',
   });
   await User.create({
-    username: 'TestUser3',
-    email: 'test3@email.com',
+    username: 'thepagemaster',
+    email: 'jimmypage@seedemail.com',
+  });
+  await User.create({
+    username: 'jonsey',
+    email: 'johnpauljones@seedemail.com',
   });
 
   await mongoose.disconnect;
