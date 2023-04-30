@@ -1,5 +1,5 @@
 # Social-Network-API
-Repository for UWCB week 14 challenge - Social Network API
+Repository for UWCB week 18 challenge - Social Network API
 
 ## Description
 For the week 14 challenge I created an API for a social network app.
