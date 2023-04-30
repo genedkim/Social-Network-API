@@ -5,6 +5,7 @@ const {User, Thought} = require('../models');
 // IIFE
 (async() =>{
   await User.deleteMany({});
+  await Thought.deleteMany({});
 
   await User.create({
     username: 'bonzo',
